@@ -1,5 +1,5 @@
 # Not required files.
 .settings
-.bin
+/bin/
 .classpath
 .project
