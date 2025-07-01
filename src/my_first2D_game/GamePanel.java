@@ -1,0 +1,124 @@
+package my_first2D_game;
+
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import javax.swing.JPanel;
+
+import entity.Player;
+import lighting.light;
+import object.SuperObject;
+import tile.ChunkManager;
+import tile.TileManager;
+
+public class GamePanel extends JPanel implements Runnable{
+		
+		// Screen Settings
+		
+		final int originalTileSize = 16; // 16x16
+		final int scale = 3;
+		
+		public final int tileSize = originalTileSize * scale; // 48x48
+		public final int maxScreenCol = 16;
+		public final int maxScreenRow = 12;
+		public final int screenWidth = maxScreenCol * tileSize; // 768 pixels
+		public final int screenHeight = maxScreenRow * tileSize; // 576 px
+
+		int FPS = 60;
+		
+		public TileManager tileM = new TileManager(this);
+		Keyhandler keyH = new Keyhandler();
+		Thread gameThread;
+		public ChunkManager chunkManger = new ChunkManager(this);	
+		public AssetSetter aSetter = new AssetSetter(this);
+		public Player player = new Player (this, keyH);
+		public CollisionChecker cChecker = new CollisionChecker(this);
+		public SuperObject obj[] = new SuperObject[10];
+		public light li = new light(this);
+		
+		public GamePanel() {
+			
+			this.setPreferredSize(new Dimension(screenWidth , screenHeight));
+			this.setBackground(Color.DARK_GRAY);
+			this.setDoubleBuffered(true);
+			this.addKeyListener(keyH);
+			this.setFocusable(true);
+		}
+		
+		public void setUpGame() {
+			aSetter.setObj();
+		}
+		
+		public void startGameThread() {
+			gameThread = new Thread(this);
+			gameThread.start();
+		}
+		
+		@Override
+		public void run() {
+			
+			double drawInterval = 1000000000/FPS; // 0.01666 seconds
+			double newxDrawTime = System.nanoTime() + drawInterval;
+			
+			while(gameThread != null) {
+			   
+				update(); // update
+				repaint(); // draw
+
+				try {
+					
+					double remainingTime = newxDrawTime - System.nanoTime() ;
+					remainingTime /= 1000000;
+					
+					  if (remainingTime < 0) {
+						remainingTime = 0;
+					  }
+					
+					Thread.sleep((long) remainingTime);
+					
+					newxDrawTime += drawInterval; 
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+		public void update() {
+			player.update();
+		}
+		
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			
+			Graphics2D g2 = (Graphics2D)g;
+			
+			tileM.draw(g2);
+
+			
+			for (int i=0;i<obj.length;i++) {
+				if (obj[i] != null && obj[i].worldY < player.worldY) {
+					obj[i].draw(g2, this);
+				}
+			}
+
+			player.draw(g2);
+				
+			for (int i=0;i<obj.length;i++) {
+				if (obj[i] != null && obj[i].worldY >= player.worldY) {
+				obj[i].draw(g2, this);
+				 }
+		     }
+			
+			li.draw(g2);
+			
+			g2.dispose();
+		}
+		
+		
+}
