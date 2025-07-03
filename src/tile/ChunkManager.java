@@ -117,8 +117,11 @@ public class ChunkManager extends Patterns{
 		if (rand.nextInt(100)<99) {
 			placeStructure(chunk.tiles,doubleRoom, rand.nextInt(Chunk.size-4), rand.nextInt(Chunk.size-4));
 			}
-		if (rand.nextInt(100)<90) {
+		if (rand.nextInt(100)<10) {
 			placeStructure(chunk.tiles,boxWall_light, rand.nextInt(Chunk.size-4), rand.nextInt(Chunk.size-4));
+			}
+		if (rand.nextInt(100)<10) {
+			placeStructure(chunk.tiles,boxWall_light2, rand.nextInt(Chunk.size-4), rand.nextInt(Chunk.size-4));
 			}
 		
 		return chunk;

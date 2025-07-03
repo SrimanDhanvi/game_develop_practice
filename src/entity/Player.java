@@ -43,18 +43,28 @@ public class Player extends Entity{
 		
 		try {
 			
-			s = ImageIO.read(getClass().getResourceAsStream("/player_images/Design1_static.png"));
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player_images/Design1_Back_walk1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player_images/Design1_Back_walk2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player_images/Design1_Front_walk1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player_images/Design1_Front_walk2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player_images/Design1_side_LeftWalk1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player_images/Design1_side_LeftWalk2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player_images/Design1_side_RightWalk1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player_images/Design1_side_RightWalk2.png"));
+			spriteSheet = ImageIO.read(getClass().getResourceAsStream("/player_images/Spritesheet_Player.png"));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		BufferedImage[][] allDirections = new BufferedImage[3][4]; // 4 directions, 4 frames each
+		for (int dir = 0; dir < 3; dir++) {
+		    for (int i = 0; i < 4; i++) {
+		        allDirections[dir][i] = spriteSheet.getSubimage(i * 48, dir * 48, 48, 48);
+		    }
+		}
+		
+		s = allDirections[0][0];
+		up1 = allDirections[0][3];
+		up2 = allDirections[1][0];
+		down1 = allDirections[0][1];
+		down2 = allDirections[0][2];
+		left1 = allDirections[1][3];
+		left2 = allDirections[2][0];
+		right1 = allDirections[1][1];
+		right2 = allDirections[1][2];
 		
 	}
 	
@@ -154,8 +164,8 @@ public class Player extends Entity{
 	
 	public void draw(Graphics2D g2) {
 		
-		g2.setColor(new Color(255, 255, 255, 10));
-		g2.fillOval(screenX-6, screenY+16, 60, 60);
+//		g2.setColor(new Color(255, 255, 255, 10));
+//		g2.fillOval(screenX-6, screenY+16, 60, 60);
 		
 		BufferedImage image = null;
 		

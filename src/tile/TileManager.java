@@ -15,7 +15,7 @@ public class TileManager {
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
-		tile = new Tile[26];
+		tile = new Tile[28];
 		getTileImage();
 	}
 	
@@ -113,6 +113,14 @@ public class TileManager {
 		tile[25] = new Tile();
 		tile[25].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Wall_light.png"));//25
 		tile[25].collision = true;
+		
+		tile[26] = new Tile();
+		tile[26].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Wall_Left_Light.png"));//26
+		tile[26].collision = true;
+		
+		tile[27] = new Tile();
+		tile[27].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Wall_Right_Light.png"));//27
+		tile[27].collision = true;
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

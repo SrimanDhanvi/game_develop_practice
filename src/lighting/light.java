@@ -3,6 +3,8 @@ package lighting;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RadialGradientPaint;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import my_first2D_game.GamePanel;
@@ -41,6 +43,7 @@ public class light extends Quant{
 		gDark.dispose();
         
 		g2.drawImage(darkness, 0, 0, null);
+		
 	}
 	
 }
