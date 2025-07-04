@@ -18,12 +18,13 @@ Log- July 2nd, 2025
 - Long ago, robots emerged and lived alongside humans.
 - But a global catastrophe forced both to take refuge in underground cities, tunnels, and forgotten shelters beneath the surface.
 - The harsh, toxic conditions of the underworld proved fatal to humans. In time, only the robots remained.
-- Centuries passed.
-The robots adapted, evolved, and built a new civilization—one that mimicked human life but had no memory of its past.
-It is in this new world that our player is born.
+- Centuries passed. The robots adapted, evolved, and built a new civilization—one that mimicked human life but had no memory of its past.
+- It is in this new world that our player is born.
+- The maze-like structure is actually an old mining site, originally built to power and support the surrounding cities. Its chaotic and inefficient layout resulted from early political interference and tight government budgets. Infrastructure development was neglected, and much of the site’s maintenance and operations were handed over to autonomous robots. Now, with humans long gone and mining operations halted, only the aging power lines remain active—silently sustaining the underground cities.
 
 3. Player story:
-- Player comes across different undergound cities and shelters complets quests and gets only small hints of the origin of the robots.
+- When the player is activated, player encounter an old cybernetic man deep within the maze. He looks at them with flickering eyes and says, “You’re the last robot built for this job. Everyone else is gone. The system still needs power. Get to work.”
+- Player comes across different undergound cities and shelters across the maze complets quests and gets only small hints of the origin of the robots.
 - The player discovers that the ruler of the Underland has forbidden anyone from speaking about the Upper World or its history—and that he alone possesses a secret passage leading to it.
 - The ruler is able to be in control due to this (brainwasing the robots).
 - Player has to fight against the ruler of underland and defeat him to escape the *maze*.
@@ -31,4 +32,4 @@ It is in this new world that our player is born.
 - 
 
 3. Features in the game:
-- Undergorund maze ,cyber techno cities. 
+- Undergorund maze, mines, cyber techno cities. 

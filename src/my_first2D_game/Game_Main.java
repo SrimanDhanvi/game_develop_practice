@@ -2,13 +2,14 @@ package my_first2D_game;
 
 import javax.swing.JFrame;
 
+
 public class Game_Main {
 
 	public static void main(String[] args) {
 		
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(false);
+		window.setResizable(true);
 		window.setTitle("Secret");
 		
 		// Connecting the GamePenel class.-----
@@ -20,6 +21,7 @@ public class Game_Main {
 		
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
+		
 		
 		gamePanel.setUpGame();
 		// Game Loop --------------------

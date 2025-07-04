@@ -18,7 +18,7 @@ public class AssetSetter {
 		gp.obj[0].worldY = (int)(Math.random()*1000+500);
 		
 		gp.obj[1] = new OBJ_health();
-		gp.obj[1].worldX = (int)(Math.random()*100000+500);
+		gp.obj[1].worldX = (int)((Math.random()*100000+500)*(-1));
 		gp.obj[1].worldY = (int)(Math.random()*100000+500);
 		
 		gp.obj[2] = new OBJ_health();
@@ -26,7 +26,7 @@ public class AssetSetter {
 		gp.obj[2].worldY = (int)(Math.random()*10000+500);
 		
 		gp.obj[3] = new OBJ_health();
-		gp.obj[3].worldX = (int)(Math.random()*10000+500);
+		gp.obj[3].worldX = (int)((Math.random()*10000+500)*(-1));
 		gp.obj[3].worldY = (int)(Math.random()*10000+500);
 		
 		gp.obj[4] = new OBJ_health();
@@ -34,7 +34,7 @@ public class AssetSetter {
 		gp.obj[4].worldY = (int)(Math.random()*10000+500);
 		
 		gp.obj[5] = new OBJ_health();
-		gp.obj[5].worldX = (int)(Math.random()*100000000+500);
+		gp.obj[5].worldX = (int)((Math.random()*100000000+500)*(-1));
 		gp.obj[5].worldY = (int)(Math.random()*100000000+500);
 		
 		gp.obj[6] = new OBJ_health();
@@ -42,7 +42,7 @@ public class AssetSetter {
 		gp.obj[6].worldY = (int)(Math.random()*1000000+500);
 		
 		gp.obj[7] = new OBJ_health();
-		gp.obj[7].worldX = (int)(Math.random()*10000+500);
+		gp.obj[7].worldX = (int)((Math.random()*10000+500)*(-1));
 		gp.obj[7].worldY = (int)(Math.random()*10000+500);
 		
 		gp.obj[8] = new OBJ_health();

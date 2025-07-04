@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -29,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 		int FPS = 60;
 		
+//		public Scale sc = new Scale(this);
 		public TileManager tileM = new TileManager(this);
 		Keyhandler keyH = new Keyhandler();
 		Thread gameThread;
@@ -96,7 +98,8 @@ public class GamePanel extends JPanel implements Runnable{
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			
-			Graphics2D g2 = (Graphics2D)g;
+			BufferedImage gameScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+			Graphics2D g2 = gameScreen.createGraphics();
 			
 			tileM.draw(g2);
 
@@ -117,7 +120,16 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			li.draw(g2);
 			
-			g2.dispose();
+			double resize = Math.min((double)getWidth() / screenWidth, (double)getHeight() / screenHeight);
+			int newWidth = (int)(screenWidth * resize);
+			int newHeight = (int)(screenHeight * resize);
+			int xOffset = (getWidth() - newWidth) / 2;
+			int yOffset = (getHeight() - newHeight) / 2;
+			
+			Graphics2D g2Internal  = (Graphics2D) g;
+			g2Internal.drawImage(gameScreen, xOffset, yOffset, newWidth, newHeight, null);
+			
+			g2Internal.dispose();
 		}
 		
 		

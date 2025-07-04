@@ -2,7 +2,9 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RadialGradientPaint;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -43,13 +45,13 @@ public class Player extends Entity{
 		
 		try {
 			
-			spriteSheet = ImageIO.read(getClass().getResourceAsStream("/player_images/Spritesheet_Player.png"));
+			spriteSheet = ImageIO.read(getClass().getResourceAsStream("/player_images/Spritesheet_Player1.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		BufferedImage[][] allDirections = new BufferedImage[3][4]; // 4 directions, 4 frames each
+		BufferedImage[][] allDirections = new BufferedImage[4][4]; // 4 directions, 4 frames each
 		for (int dir = 0; dir < 3; dir++) {
 		    for (int i = 0; i < 4; i++) {
 		        allDirections[dir][i] = spriteSheet.getSubimage(i * 48, dir * 48, 48, 48);
@@ -65,6 +67,12 @@ public class Player extends Entity{
 		left2 = allDirections[2][0];
 		right1 = allDirections[1][1];
 		right2 = allDirections[1][2];
+		hitRight = allDirections[2][1];
+		hitLeft = allDirections[2][2];
+		hitFront = allDirections[2][3];
+		hitFront1 = allDirections[3][0];
+		hitFront2 = allDirections[3][1];
+		hitBack = allDirections[3][2];
 		
 	}
 	
@@ -166,6 +174,19 @@ public class Player extends Entity{
 		
 //		g2.setColor(new Color(255, 255, 255, 10));
 //		g2.fillOval(screenX-6, screenY+16, 60, 60);
+		
+		{
+        Point2D center = new Point2D.Float(screenX+24, screenY+41);
+        float radius = 25;
+        float[] dist = {0.5f, 1.0f};  // From center to edge
+        Color[] colors = { new Color(0, 0, 0, 0), new Color(0, 255, 255, 100)};  // Bright center to transparent
+
+        RadialGradientPaint rgp = new RadialGradientPaint(center, radius, dist, colors);
+
+        g2.setPaint(rgp);
+        g2.fillOval(screenX-1, screenY+16, 50, 50);
+		}
+        
 		
 		BufferedImage image = null;
 		
