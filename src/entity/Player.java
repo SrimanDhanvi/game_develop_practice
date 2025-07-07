@@ -45,20 +45,21 @@ public class Player extends Entity{
 		
 		try {
 			
-			spriteSheet = ImageIO.read(getClass().getResourceAsStream("/player_images/Spritesheet_Player1.png"));
+			spriteSheet = ImageIO.read(getClass().getResourceAsStream("/player_images/Spritesheet_Player3.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		BufferedImage[][] allDirections = new BufferedImage[4][4]; // 4 directions, 4 frames each
-		for (int dir = 0; dir < 3; dir++) {
-		    for (int i = 0; i < 4; i++) {
+		for (int dir = 0; dir < allDirections.length; dir++) {
+		    for (int i = 0; i < allDirections[0].length; i++) {
 		        allDirections[dir][i] = spriteSheet.getSubimage(i * 48, dir * 48, 48, 48);
 		    }
 		}
 		
-		s = allDirections[0][0];
+		s1 = allDirections[0][0];
+		s2 = allDirections[3][3];
 		up1 = allDirections[0][3];
 		up2 = allDirections[1][0];
 		down1 = allDirections[0][1];
@@ -80,11 +81,52 @@ public class Player extends Entity{
 		
 		direction = "s";
 		direction2 = "";
+		direcImg = null;
 		
 		if (keyH.upPressed == true || keyH.downPressed == true 
-				||keyH.leftPressed == true ||keyH.rightPressed == true) {
+				||keyH.leftPressed == true ||keyH.rightPressed == true|| keyH.HitPressed == true) {
+
+			if (keyH.HitPressed == true && keyH.upPressed == true && keyH.leftPressed == true) {
+				direction = "up";
+				direction2 = "left";
+				direcImg = "up";
+			}
+			else if (keyH.HitPressed == true && keyH.upPressed == true && keyH.rightPressed == true) {
+				direction = "up";
+				direction2 = "right" ;
+				direcImg = "up";
+			}
+			else if (keyH.HitPressed == true && keyH.downPressed == true && keyH.rightPressed == true) {
+				direction = "down";
+				direction2 = "right" ;
+				direcImg = "down";
+			}
+			else if (keyH.HitPressed == true && keyH.downPressed == true && keyH.leftPressed == true) {
+				direction = "down";
+				direction2 = "left" ;
+				direcImg = "down";
+			}
+			else if (keyH.HitPressed == true && keyH.upPressed == true) {
+				direction = "up";
+				direcImg = "up";
+			}
+			else if (keyH.HitPressed == true && keyH.downPressed == true) {
+				direction = "down";
+				direcImg = "down";
+			}
+			else if (keyH.HitPressed == true && keyH.leftPressed == true) {
+				direction = "left";
+				direcImg = "left";
+		    }
+			else if (keyH.HitPressed == true && keyH.rightPressed == true) {
+				direction = "right";
+				direcImg = "right";
+		    } else if (keyH.HitPressed == true) {
+		    	direcImg = "s";
+			}		
 		
-		if (keyH.upPressed == true && keyH.leftPressed == true) {
+		
+		else if (keyH.upPressed == true && keyH.leftPressed == true) {
 			direction = "up";
 			direction2 = "left" ;
 		}
@@ -151,11 +193,11 @@ public class Player extends Entity{
 			   break;
 			}
 		} 
-
 		
+	}
 		spriteCounter++;
 		
-		if (spriteCounter > 15) {
+		if (spriteCounter > 20) {
 			if (spriteNum == 1) {
 				spriteNum = 2;
 			} else if (spriteNum == 2) {
@@ -163,8 +205,6 @@ public class Player extends Entity{
 			}
 			spriteCounter = 0;
 		}
-		
-	}
 		
 //		System.out.println(worldX);
 //		System.out.println(worldY);
@@ -190,9 +230,15 @@ public class Player extends Entity{
 		
 		BufferedImage image = null;
 		
+		if (direcImg == null) {
 		switch(direction) {
 		case "s":
-			image = s;
+			if (spriteNum == 1) {
+				image = s1;
+			}
+			if (spriteNum == 2) {
+				image = s2;
+			}
 		break;
 		case "up":			
 			if (spriteNum == 1) {
@@ -226,7 +272,45 @@ public class Player extends Entity{
 				image = right2;
 			}
 		break;
-			
+		}
+		} else {
+		switch (direcImg) {
+		case "s":
+			image = hitFront;
+		break;
+		case "up":			
+			if (spriteNum == 1) {
+				image = hitBack;
+			}
+			if (spriteNum == 2) {
+				image = hitBack;
+			}
+		break;
+		case "down":
+			if (spriteNum == 1) {
+				image = hitFront1;
+			}
+			if (spriteNum == 2) {
+				image = hitFront2;
+			}
+		break;
+		case "left":
+			if (spriteNum == 1) {
+				image = hitLeft;
+			}
+			if (spriteNum == 2) {
+				image = hitLeft;
+			}
+		break;
+		case "right":
+			if (spriteNum == 1) {
+				image = hitRight;
+			}
+			if (spriteNum == 2) {
+				image = hitRight;
+			}
+		break;
+		}
 		}
 		
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
