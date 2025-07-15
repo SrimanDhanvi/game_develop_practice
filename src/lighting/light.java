@@ -27,16 +27,25 @@ public class light extends Quant{
 		gDark.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		
 		
-        if (!gp.tileM.lightTileX.isEmpty()&& !gp.tileM.lightTileY.isEmpty()) {
-		gDark.setComposite(AlphaComposite.SrcOver);
-		gDark.setColor(new Color(0, 255, 150, 30));
-		gDark.fillOval(gp.tileM.lightTileX.get(0), gp.tileM.lightTileY.get(0)+40, gp.tileSize, gp.tileSize);
-		
-		gDark.setColor(new Color(147, 201, 186, 20));
-		gDark.fillOval(gp.tileM.lightTileX.get(0)-20, gp.tileM.lightTileY.get(0)+40, gp.tileSize+40, gp.tileSize+40);
-		
-		gDark.setColor(new Color(118, 168, 149, 50));
-		gDark.fillOval(gp.tileM.lightTileX.get(0)-40, gp.tileM.lightTileY.get(0)+40, gp.tileSize+80, gp.tileSize+80);
+        if (gp.tileM.colorCode == 1) {
+        	
+        	gDark.setComposite(AlphaComposite.SrcOver);
+    	
+        Point2D center = new Point2D.Float(gp.tileM.lightTileX.get(0)+24, gp.tileM.lightTileY.get(0)+24);
+        float radius = 96;
+        float[] dist = {0.0f, 0.5f, 1.0f};  // Center → Mid-glow → Edge fade
+        Color[] colors = {
+            new Color(0, 255, 150, 100),  // Bright green at center
+            new Color(0, 255, 150, 30),   // Faded green in the middle
+            new Color(0, 0, 0, 0)         // Transparent at edge
+        };
+
+        RadialGradientPaint rgp = new RadialGradientPaint(center, radius, dist, colors);
+        
+        gDark.setPaint(rgp);
+        gDark.fillOval(gp.tileM.lightTileX.get(0)-72, gp.tileM.lightTileY.get(0)-72, gp.tileSize+144, gp.tileSize+144);
+        
+
         }
 
 		

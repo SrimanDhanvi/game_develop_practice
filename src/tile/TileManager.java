@@ -140,11 +140,13 @@ public class TileManager extends Tile{
 		
 	
 public int tileNum;
+public int colorCode;
 public ArrayList<Integer> lightTileX = new ArrayList<>();
 public ArrayList<Integer> lightTileY = new ArrayList<>();
 	
 	public void draw(Graphics2D g2) {
 		
+		colorCode = 0;
 		lightTileX.clear();
 		lightTileY.clear();
 		
@@ -167,9 +169,12 @@ public ArrayList<Integer> lightTileY = new ArrayList<>();
 	    		
 	    		tileNum = gp.chunkManger.getTileID(worldTileX, worldTileY);
 	    		
-	    		if (tileNum == 25) {
+	    		switch (tileNum) {
+	    		case 25:
+	    			colorCode = 1;
 	    			lightTileX.add(screenX);
 	    			lightTileY.add(screenY);
+	    		break;
 	    		}
 	   
 	    		g2.drawImage(tile[tileNum].image , screenX, screenY, gp.tileSize, gp.tileSize, null);
