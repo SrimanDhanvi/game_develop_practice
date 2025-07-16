@@ -45,13 +45,13 @@ public class Player extends Entity{
 		
 		try {
 			
-			spriteSheet = ImageIO.read(getClass().getResourceAsStream("/player_images/Spritesheet_Player3.png"));
+			spriteSheet = ImageIO.read(getClass().getResourceAsStream("/player_images/Spritesheet_Player4.png"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		BufferedImage[][] allDirections = new BufferedImage[4][4]; // 4 directions, 4 frames each
+		BufferedImage[][] allDirections = new BufferedImage[5][4]; // 4 directions, 4 frames each
 		for (int dir = 0; dir < allDirections.length; dir++) {
 		    for (int i = 0; i < allDirections[0].length; i++) {
 		        allDirections[dir][i] = spriteSheet.getSubimage(i * 48, dir * 48, 48, 48);
@@ -74,6 +74,10 @@ public class Player extends Entity{
 		hitFront1 = allDirections[3][0];
 		hitFront2 = allDirections[3][1];
 		hitBack = allDirections[3][2];
+		hitBack2 = allDirections[4][0];
+		hitRight2 = allDirections[4][1];
+		hitLeft2 = allDirections[4][2];
+		
 		
 	}
 	
@@ -224,7 +228,7 @@ public class Player extends Entity{
         RadialGradientPaint rgp = new RadialGradientPaint(center, radius, dist, colors);
 
         g2.setPaint(rgp);
-        g2.fillOval(screenX-1, screenY+16, 50, 50);
+        g2.fillOval(screenX-2, screenY+16, 50, 50);
 		}
         
 		
@@ -283,7 +287,7 @@ public class Player extends Entity{
 				image = hitBack;
 			}
 			if (spriteNum == 2) {
-				image = hitBack;
+				image = hitBack2;
 			}
 		break;
 		case "down":
@@ -299,7 +303,7 @@ public class Player extends Entity{
 				image = hitLeft;
 			}
 			if (spriteNum == 2) {
-				image = hitLeft;
+				image = hitLeft2;
 			}
 		break;
 		case "right":
@@ -307,7 +311,7 @@ public class Player extends Entity{
 				image = hitRight;
 			}
 			if (spriteNum == 2) {
-				image = hitRight;
+				image = hitRight2;
 			}
 		break;
 		}
