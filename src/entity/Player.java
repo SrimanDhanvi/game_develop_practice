@@ -2,9 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.RadialGradientPaint;
 import java.awt.Rectangle;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -12,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import my_first2D_game.GamePanel;
 import my_first2D_game.Keyhandler;
+import object.OBJ_health;
 
 public class Player extends Entity{
 	
@@ -29,6 +28,13 @@ public class Player extends Entity{
 		screenY = gp.screenHeight/2 - gp.tileSize/2;
 		
 		solidArea = new Rectangle(8 ,32 ,32 ,16);
+		solidArea.x=8;
+		solidArea.y=32;
+		solidArea.width=32;
+		solidArea.height=16;
+		
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 		
 		setDefaultValues();
 		getplayerImage();
@@ -161,8 +167,13 @@ public class Player extends Entity{
 		
 		int diaSpeed = (int)(speed/Math.sqrt(2));
 		
+		//Check tile collision
 		collisionOn = false;
 		gp.cChecker.checkTile(this);
+		
+		//Check object collision
+		int objectIndex = gp.cChecker.checkObject(this, true);
+		pickUpObject(objectIndex);
 		
 		if (collisionOn == false) {
 			
@@ -213,23 +224,57 @@ public class Player extends Entity{
 //		System.out.println(worldX);
 //		System.out.println(worldY);
 }
+	int a = 0;
+	public void pickUpObject(int i) {
+		
+		// different cases for different objects touched by the player
+		if(i != 999) {
+			switch(i) {
+			case 0:
+				gp.obj[0] = null;
+				break;
+			case 1:
+				gp.obj[1] = null;
+				break;
+			}
+		}
+		
+		//write a condition where the health bar spawns only when player destroyers a certain number of mobs.
+		// remove the variable a.
+		int baseX = gp.player.worldX;
+		int baseY = gp.player.worldY;
+
+		a++;
+		
+       if (gp.obj[0] == null&&a>20) {
+    	   
+        int spawnRange = 1000;
+    	   
+		gp.obj[0] = new OBJ_health();
+		gp.obj[0].worldX = baseX + (int)(Math.random() * 2 * spawnRange - spawnRange);
+		gp.obj[0].worldY = baseY + (int)(Math.random() * 2 * spawnRange - spawnRange);
+		a = 0;
+		}
+
+	}
 	
 	public void draw(Graphics2D g2) {
 		
-//		g2.setColor(new Color(255, 255, 255, 10));
-//		g2.fillOval(screenX-6, screenY+16, 60, 60);
 		
-		{
-        Point2D center = new Point2D.Float(screenX+24, screenY+41);
-        float radius = 25;
-        float[] dist = {0.5f, 1.0f};  // From center to edge
-        Color[] colors = { new Color(0, 0, 0, 0), new Color(0, 255, 255, 100)};  // Bright center to transparent
-
-        RadialGradientPaint rgp = new RadialGradientPaint(center, radius, dist, colors);
-
-        g2.setPaint(rgp);
-        g2.fillOval(screenX-2, screenY+16, 50, 50);
-		}
+//		{
+//        Point2D center = new Point2D.Float(screenX+24, screenY+41);
+//        float radius = 25;
+//        float[] dist = {0.5f, 1.0f};  // From center to edge
+//        Color[] colors = { new Color(0, 0, 0, 0), new Color(0, 255, 255, 100)};  // Bright center to transparent
+//
+//        RadialGradientPaint rgp = new RadialGradientPaint(center, radius, dist, colors);
+//
+//        g2.setPaint(rgp);
+//        g2.fillOval(screenX-2, screenY+16, 50, 50);
+//		}
+		
+		g2.setColor(new Color(0, 0, 0, 100));
+		g2.fillOval(screenX+3, screenY+22, 40, 40);
         
 		
 		BufferedImage image = null;

@@ -16,6 +16,7 @@ public class OBJ_OldMan extends SuperObject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		collision = true;
 	}
 	
 }

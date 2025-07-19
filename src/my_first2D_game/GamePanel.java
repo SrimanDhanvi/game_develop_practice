@@ -19,25 +19,32 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		// Screen Settings
 		
+	private static final long serialVersionUID = 1L;
+	
 		final int originalTileSize = 16; // 16x16
 		final int scale = 3;
 		
 		public final int tileSize = originalTileSize * scale; // 48x48
 		public final int maxScreenCol = 16;
-		public final int maxScreenRow = 12;
+		public final int maxScreenRow = 9;
 		public final int screenWidth = maxScreenCol * tileSize; // 768 pixels
 		public final int screenHeight = maxScreenRow * tileSize; // 576 px
 
 		int FPS = 60;
 		
 //		public Scale sc = new Scale(this);
+		
+		//SYSTME
 		public TileManager tileM = new TileManager(this);
 		Keyhandler keyH = new Keyhandler();
 		Thread gameThread;
+		Sound sound = new Sound();
 		public ChunkManager chunkManger = new ChunkManager(this);	
-		public AssetSetter aSetter = new AssetSetter(this);
-		public Player player = new Player (this, keyH);
 		public CollisionChecker cChecker = new CollisionChecker(this);
+		public AssetSetter aSetter = new AssetSetter(this);
+		
+		// ENTITY AND OBJECT
+		public Player player = new Player (this, keyH);
 		public SuperObject obj[] = new SuperObject[10];
 		public light li = new light(this);
 		
@@ -52,6 +59,8 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		public void setUpGame() {
 			aSetter.setObj();
+			
+			playMusic(0);
 		}
 		
 		public void startGameThread() {
@@ -93,7 +102,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		public void update() {
 			player.update();
-			obj[0].update();
+			
 			}
 			
 		
@@ -105,6 +114,7 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			tileM.draw(g2);
 
+			li.draw(g2);
 			
 			for (int i=0;i<obj.length;i++) {
 				if (obj[i] != null && obj[i].worldY < player.worldY) {
@@ -120,7 +130,6 @@ public class GamePanel extends JPanel implements Runnable{
 				 }
 		     }
 			
-			li.draw(g2);
 			
 			double resize = Math.min((double)getWidth() / screenWidth, (double)getHeight() / screenHeight);
 			int newWidth = (int)(screenWidth * resize);
@@ -134,5 +143,28 @@ public class GamePanel extends JPanel implements Runnable{
 			g2Internal.dispose();
 		}
 		
+		public void playMusic(int i) {
+			
+			sound.setFile(i);
+			sound.play();
+			sound.loop();
+		}
 		
+		public void stopMusic() {
+			
+			sound.stop();
+		}
+		
+		public void playSE(int i) {
+			
+			sound.setFile(i);
+			sound.play();
+		}
 }
+
+
+
+
+
+
+

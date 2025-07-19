@@ -2,6 +2,7 @@ package object;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import my_first2D_game.GamePanel;
@@ -13,16 +14,15 @@ public class SuperObject {
 	public boolean collision = false;
 	public int worldX, worldY;
 	public int objectCounter = 0;
-	static int PlayerWorldX;
-	static int PlayerWorldY;
+	public Rectangle solidArea = new Rectangle(0,0,48,48);
+	public int solidAreaDefaultX = 0;
+	public int solidAreaDefaultY = 0;
+	
 	
 	public void draw(Graphics2D g2, GamePanel gp) {
 		
-		PlayerWorldX = gp.player.worldX;
-		PlayerWorldY = gp.player.worldY;
-		
-		int screenX = worldX - gp.player.worldX + gp.player.screenX ;
-		int screenY = worldY - gp.player.worldY + gp.player.screenY ;
+		int screenX = (int)(worldX - gp.player.worldX + gp.player.screenX) ;
+		int screenY = (int)(worldY - gp.player.worldY + gp.player.screenY) ;
 		
 		if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
 			worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
@@ -32,19 +32,8 @@ public class SuperObject {
 			g2.fillOval(screenX+12, screenY+40, 20, 20);
 			g2.drawImage(image , screenX, screenY, gp.tileSize, gp.tileSize, null);
 		}
+//		System.out.println("Health obj at: " + gp.obj[1].worldX + ", " + gp.obj[1].worldY);
 		
 	}
-	
-	public void update() {
-		objectCounter++;
-		
-		int spawnRange = 1000;
-		
-		if(objectCounter>999) {
-		worldX = PlayerWorldX + (int)(Math.random() * 2 * spawnRange - spawnRange);
-		worldY = PlayerWorldY + (int)(Math.random() * 2 * spawnRange - spawnRange);
-		objectCounter = 0;
-		}
-		
-	}
+
 }

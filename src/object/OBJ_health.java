@@ -17,5 +17,6 @@ public class OBJ_health extends SuperObject{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		collision = true;
 	}
 }
