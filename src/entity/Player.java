@@ -95,7 +95,7 @@ public class Player extends Entity{
 		
 		if (keyH.upPressed == true || keyH.downPressed == true 
 				||keyH.leftPressed == true ||keyH.rightPressed == true|| keyH.HitPressed == true) {
-
+			
 			if (keyH.HitPressed == true && keyH.upPressed == true && keyH.leftPressed == true) {
 				direction = "up";
 				direction2 = "left";
@@ -231,9 +231,11 @@ public class Player extends Entity{
 		if(i != 999) {
 			switch(i) {
 			case 0:
+				gp.playSE(2);
 				gp.obj[0] = null;
 				break;
 			case 1:
+				gp.playSE(3);
 				gp.obj[1] = null;
 				break;
 			}
