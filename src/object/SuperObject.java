@@ -14,15 +14,17 @@ public class SuperObject {
 	public boolean collision = false;
 	public int worldX, worldY;
 	public int objectCounter = 0;
-	public Rectangle solidArea = new Rectangle(0,0,55,55);
+	public Rectangle solidArea = new Rectangle(0,0,70,70);
 	public int solidAreaDefaultX = 0;
 	public int solidAreaDefaultY = 0;
+	public int screenX;
+	public int screenY;
 	
 	
 	public void draw(Graphics2D g2, GamePanel gp) {
 		
-		int screenX = (int)(worldX - gp.player.worldX + gp.player.screenX) ;
-		int screenY = (int)(worldY - gp.player.worldY + gp.player.screenY) ;
+		screenX = (int)(worldX - gp.player.worldX + gp.player.screenX) ;
+		screenY = (int)(worldY - gp.player.worldY + gp.player.screenY) ;
 		
 		if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
 			worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&

@@ -6,23 +6,35 @@ public class CollisionChecker {
 	
 	GamePanel gp;
 	
+	int entityLeftWorldX;
+	int entityRightWorldX;
+	int entityTopWorldY;
+	int entityBottomWorldY;
+	
+	int entityLeftCol;
+	int entityRightCol;
+	int entityTopRow;
+	int entityBottomRow;
+	
+	int tileNum1, tileNum2;
+	
+	int index;
+	
 	public CollisionChecker(GamePanel gp) {
 		this.gp = gp;
 	}
 	
 	public void checkTile(Entity entity) {
 		
-		int entityLeftWorldX = entity.worldX + entity.solidArea.x;
-		int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
-		int entityTopWorldY = entity.worldY + entity.solidArea.y;
-		int entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
+		entityLeftWorldX = entity.worldX + entity.solidArea.x;
+		entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
+		entityTopWorldY = entity.worldY + entity.solidArea.y;
+		entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
 		
-		int entityLeftCol = Math.floorDiv(entityLeftWorldX, gp.tileSize);
-		int entityRightCol = Math.floorDiv(entityRightWorldX, gp.tileSize);
-		int entityTopRow =  Math.floorDiv(entityTopWorldY, gp.tileSize);
-		int entityBottomRow = Math.floorDiv(entityBottomWorldY, gp.tileSize);
-		
-		int tileNum1, tileNum2;
+		entityLeftCol = Math.floorDiv(entityLeftWorldX, gp.tileSize);
+		entityRightCol = Math.floorDiv(entityRightWorldX, gp.tileSize);
+		entityTopRow =  Math.floorDiv(entityTopWorldY, gp.tileSize);
+		entityBottomRow = Math.floorDiv(entityBottomWorldY, gp.tileSize);
 		
 		switch (entity.direction) {
 		case "up":
@@ -63,7 +75,7 @@ public class CollisionChecker {
 	
 	public int checkObject(Entity entity, boolean player) {
 		
-		int index = 999;
+		index = 999;
 		
 		for(int i=0;i < gp.obj.length;i++) {
 			if(gp.obj[i] != null) {

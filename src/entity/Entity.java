@@ -21,4 +21,12 @@ public class Entity {
 	public Rectangle solidArea;
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn = false;
+	public int diaSpeed;
+	public int objectIndex;
+	public int a = 0;
+	public int baseX;
+	public int baseY;
+	
+    int spawnRange;
+    int timer = 0;
 }

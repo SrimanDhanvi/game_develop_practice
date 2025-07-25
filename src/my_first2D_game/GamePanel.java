@@ -25,10 +25,10 @@ public class GamePanel extends JPanel implements Runnable{
 		final int scale = 3;
 		
 		public final int tileSize = originalTileSize * scale; // 48x48
-		public final int maxScreenCol = 16;
+		public final int maxScreenCol = 18;
 		public final int maxScreenRow = 9;
-		public final int screenWidth = maxScreenCol * tileSize; // 768 pixels
-		public final int screenHeight = maxScreenRow * tileSize; // 576 px
+		public final int screenWidth = maxScreenCol * tileSize; //  pixels
+		public final int screenHeight = maxScreenRow * tileSize; //  px
 
 		int FPS = 60;
 		
@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable{
 		public ChunkManager chunkManger = new ChunkManager(this);	
 		public CollisionChecker cChecker = new CollisionChecker(this);
 		public AssetSetter aSetter = new AssetSetter(this);
+		public UI ui = new UI(this);
 		
 		// ENTITY AND OBJECT
 		public Player player = new Player (this, keyH);
@@ -115,6 +116,13 @@ public class GamePanel extends JPanel implements Runnable{
 			BufferedImage gameScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = gameScreen.createGraphics();
 			
+			// DEBUG
+//			long drawStart = 0;
+//			if (keyH.F3 == true) {
+//			drawStart = System.nanoTime();
+//			}
+			//
+			
 			tileM.draw(g2);
 
 			li.draw(g2);
@@ -132,6 +140,17 @@ public class GamePanel extends JPanel implements Runnable{
 				obj[i].draw(g2, this);
 				 }
 		     }
+			
+			ui.draw(g2);
+			
+			// DEBUG
+//			if(keyH.F3 == true) {
+//			long drawEnd = System.nanoTime();
+//			long passsed = drawEnd - drawStart;
+//			g2.setColor(Color.white);
+//			g2.drawString("Draw Time: " + passsed, 10, screenHeight/2);
+//			}
+			//
 			
 			
 			double resize = Math.min((double)getWidth() / screenWidth, (double)getHeight() / screenHeight);

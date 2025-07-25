@@ -165,14 +165,14 @@ public class Player extends Entity{
 			direction = "right";
 	    } 
 		
-		int diaSpeed = (int)(speed/Math.sqrt(2));
+		diaSpeed = (int)(speed/Math.sqrt(2));
 		
 		//Check tile collision
 		collisionOn = false;
 		gp.cChecker.checkTile(this);
 		
 		//Check object collision
-		int objectIndex = gp.cChecker.checkObject(this, true);
+		objectIndex = gp.cChecker.checkObject(this, true);
 		pickUpObject(objectIndex);
 		
 		if (collisionOn == false) {
@@ -224,7 +224,7 @@ public class Player extends Entity{
 //		System.out.println(worldX);
 //		System.out.println(worldY);
 }
-	int a = 0;
+
 	public void pickUpObject(int i) {
 		
 		// different cases for different objects touched by the player
@@ -233,6 +233,7 @@ public class Player extends Entity{
 			case 0:
 				gp.playSE(2);
 				gp.obj[0] = null;
+				gp.ui.showMessage("Health Boost", new Color(106, 240, 17, 255), 1);
 				break;
 			case 1:
 				gp.playSE(3);
@@ -243,20 +244,27 @@ public class Player extends Entity{
 		
 		//write a condition where the health bar spawns only when player destroyers a certain number of mobs.
 		// remove the variable a.
-		int baseX = gp.player.worldX;
-		int baseY = gp.player.worldY;
+		baseX = gp.player.worldX;
+		baseY = gp.player.worldY;
+		spawnRange = 1000;
 
 		a++;
 		
        if (gp.obj[0] == null&&a>20) {
-    	   
-        int spawnRange = 1000;
     	   
 		gp.obj[0] = new OBJ_health();
 		gp.obj[0].worldX = baseX + (int)(Math.random() * 2 * spawnRange - spawnRange);
 		gp.obj[0].worldY = baseY + (int)(Math.random() * 2 * spawnRange - spawnRange);
 		a = 0;
 		}
+       
+       timer++;
+       
+       if(timer>1800) {
+       gp.obj[0].worldX = baseX + (int)(Math.random() * 2 * spawnRange - spawnRange);
+		gp.obj[0].worldY = baseY + (int)(Math.random() * 2 * spawnRange - spawnRange);
+		timer = 0;
+	}
 
 	}
 	

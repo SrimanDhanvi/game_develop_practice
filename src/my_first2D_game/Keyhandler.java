@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class Keyhandler implements KeyListener{
 	
 	public boolean upPressed, downPressed, leftPressed, rightPressed, HitPressed;
+//	boolean F3 = false;
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -43,6 +44,14 @@ public class Keyhandler implements KeyListener{
         	break;	
         case KeyEvent.VK_SPACE  :
         	HitPressed = true;
+//        case KeyEvent.VK_F3 :
+//        {
+//        	if (F3 == false) {
+//        	F3 = true;
+//        	} else if (F3 == true) {
+//        		F3 = false;
+//        	}
+//        }
         }
 		
 	}

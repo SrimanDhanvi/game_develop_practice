@@ -3,7 +3,6 @@ package tile;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -139,10 +138,6 @@ public class TileManager extends Tile{
 	}
 		
 	
-public int tileNum;
-public int colorCode;
-public ArrayList<Integer> lightTileX = new ArrayList<>();
-public ArrayList<Integer> lightTileY = new ArrayList<>();
 	
 	public void draw(Graphics2D g2) {
 		
@@ -150,22 +145,20 @@ public ArrayList<Integer> lightTileY = new ArrayList<>();
 		lightTileX.clear();
 		lightTileY.clear();
 		
-		int buffer = 2;
+		startTileX = (gp.player.worldX / gp.tileSize) - (gp.maxScreenCol / 2) - buffer;
+		endTileX = (gp.player.worldX / gp.tileSize) + (gp.maxScreenCol / 2) + buffer;
 		
-		int startTileX = (gp.player.worldX / gp.tileSize) - (gp.maxScreenCol / 2) - buffer;
-		int endTileX = (gp.player.worldX / gp.tileSize) + (gp.maxScreenCol / 2) + buffer;
-		
-		int startTileY = (gp.player.worldY / gp.tileSize) - (gp.maxScreenRow / 2) - buffer;
-		int endTileY = (gp.player.worldY / gp.tileSize) + (gp.maxScreenRow / 2) + buffer;
+		startTileY = (gp.player.worldY / gp.tileSize) - (gp.maxScreenRow / 2) - buffer;
+		endTileY = (gp.player.worldY / gp.tileSize) + (gp.maxScreenRow / 2) + buffer;
 				
 	    for (int worldTileX = startTileX;worldTileX <= endTileX;worldTileX++) {
 	    	for (int worldTileY = startTileY;worldTileY <= endTileY;worldTileY++) {
 	    		
-	    		int worldX = worldTileX*gp.tileSize;
-	    		int worldY = worldTileY*gp.tileSize;
+	    		worldX = worldTileX*gp.tileSize;
+	    		worldY = worldTileY*gp.tileSize;
 	    		
-	    		int screenX = worldX - gp.player.worldX + gp.player.screenX ;
-	    		int screenY = worldY - gp.player.worldY + gp.player.screenY ;
+	    		screenX = worldX - gp.player.worldX + gp.player.screenX ;
+	    		screenY = worldY - gp.player.worldY + gp.player.screenY ;
 	    		
 	    		tileNum = gp.chunkManger.getTileID(worldTileX, worldTileY);
 	    		
