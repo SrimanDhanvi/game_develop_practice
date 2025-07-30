@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class OBJ_OldMan extends SuperObject {
+public class OBJ_OldMan extends SuperObject{
 
 	public OBJ_OldMan() {
 		
-		name = "Old Man";
+		name="Old man";
 		
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/Old_man_NPC.png"));
@@ -18,5 +18,4 @@ public class OBJ_OldMan extends SuperObject {
 		}
 		collision = true;
 	}
-	
 }

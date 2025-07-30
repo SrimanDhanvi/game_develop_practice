@@ -66,8 +66,8 @@ public class ChunkManager extends Patterns{
 			24
 	};
 	
-	static int cooldowntime = 0;
-	static int cooluptime1 = 0;
+	int timer;
+	
 	
 	private Chunk generateChunk(int chunkX, int chunkY) {
 		
@@ -83,6 +83,7 @@ public class ChunkManager extends Patterns{
 			}
 		}
 		
+		timer--;
 		
 		if (rand.nextInt(100)<50) {
 			placeStructure(chunk.tiles,cageDesign1, rand.nextInt(Chunk.size-4), rand.nextInt(Chunk.size-4));
@@ -115,17 +116,20 @@ public class ChunkManager extends Patterns{
 			placeStructure(chunk.tiles,doubleRoom, rand.nextInt(Chunk.size-4), rand.nextInt(Chunk.size-4));
 			}
 		
-		if (cooldowntime<=0 && rand.nextInt(100)<10) {
+
+		if (rand.nextInt(100)<10&&timer<=0) {
 			placeStructure(chunk.tiles,boxWall_light, rand.nextInt(Chunk.size-4), rand.nextInt(Chunk.size-4));
-			cooldowntime = 20;
+			timer = 20;
 		}
-		if (cooluptime1>=60 && rand.nextInt(100)<10) {
+
+		if (rand.nextInt(100)<10&&timer<=0) {
 			placeStructure(chunk.tiles,boxWall_light2, rand.nextInt(Chunk.size-4), rand.nextInt(Chunk.size-4));
-			cooluptime1 = 20;
+			timer = 60;
 		}
-		
-		if(cooldowntime>0) cooldowntime--;
-		if(cooluptime1>0) cooluptime1++;
+			if (rand.nextInt(100)<10&&timer<=0) {
+				placeStructure(chunk.tiles,boxWall_light3, rand.nextInt(Chunk.size-4), rand.nextInt(Chunk.size-4));
+				timer = 120;
+			}
 		
 		return chunk;
 	}

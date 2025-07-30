@@ -4,24 +4,21 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import my_first2D_game.GamePanel;
 import my_first2D_game.Keyhandler;
-import object.OBJ_health;
 
 public class Player extends Entity{
 	
-	GamePanel gp;
+	
 	Keyhandler keyH;
 	
 	public final int screenX;
 	public final int screenY;
 	
 	public Player(GamePanel gp, Keyhandler keyH) {
-		this.gp = gp;
+		
+		super(gp);
 		this.keyH = keyH;
 		
 		screenX = gp.screenWidth/2 - gp.tileSize/2;
@@ -49,40 +46,28 @@ public class Player extends Entity{
 	
 	public void getplayerImage() {
 		
-		try {
-			
-			spriteSheet = ImageIO.read(getClass().getResourceAsStream("/player_images/Spritesheet_Player4.png"));
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		getSpritImages = setUpSpriteSheet("/player_images/Spritesheet_Player4.png",4 , 5);
 		
-		BufferedImage[][] allDirections = new BufferedImage[5][4]; // 4 directions, 4 frames each
-		for (int dir = 0; dir < allDirections.length; dir++) {
-		    for (int i = 0; i < allDirections[0].length; i++) {
-		        allDirections[dir][i] = spriteSheet.getSubimage(i * 48, dir * 48, 48, 48);
-		    }
-		}
 		
-		s1 = allDirections[0][0];
-		s2 = allDirections[3][3];
-		up1 = allDirections[0][3];
-		up2 = allDirections[1][0];
-		down1 = allDirections[0][1];
-		down2 = allDirections[0][2];
-		left1 = allDirections[1][3];
-		left2 = allDirections[2][0];
-		right1 = allDirections[1][1];
-		right2 = allDirections[1][2];
-		hitRight = allDirections[2][1];
-		hitLeft = allDirections[2][2];
-		hitFront = allDirections[2][3];
-		hitFront1 = allDirections[3][0];
-		hitFront2 = allDirections[3][1];
-		hitBack = allDirections[3][2];
-		hitBack2 = allDirections[4][0];
-		hitRight2 = allDirections[4][1];
-		hitLeft2 = allDirections[4][2];
+		s1 = getSpritImages[0][0];
+		s2 = getSpritImages[3][3];
+		up1 = getSpritImages[0][3];
+		up2 = getSpritImages[1][0];
+		down1 = getSpritImages[0][1];
+		down2 = getSpritImages[0][2];
+		left1 = getSpritImages[1][3];
+		left2 = getSpritImages[2][0];
+		right1 = getSpritImages[1][1];
+		right2 = getSpritImages[1][2];
+		hitRight = getSpritImages[2][1];
+		hitLeft = getSpritImages[2][2];
+		hitFront = getSpritImages[2][3];
+		hitFront1 = getSpritImages[3][0];
+		hitFront2 = getSpritImages[3][1];
+		hitBack = getSpritImages[3][2];
+		hitBack2 = getSpritImages[4][0];
+		hitRight2 = getSpritImages[4][1];
+		hitLeft2 = getSpritImages[4][2];
 		
 		
 	}
@@ -236,35 +221,21 @@ public class Player extends Entity{
 				gp.ui.showMessage("Health Boost", new Color(106, 240, 17, 255), 1);
 				break;
 			case 1:
-				gp.playSE(3);
-				gp.obj[1] = null;
+				if(gp.ui.dsno == 0) {
+				gp.ui.setDialouge(1);
 				break;
+				}
 			}
 		}
 		
-		//write a condition where the health bar spawns only when player destroyers a certain number of mobs.
-		// remove the variable a.
-		baseX = gp.player.worldX;
-		baseY = gp.player.worldY;
-		spawnRange = 1000;
-
+		// remove the variable and replace it with no. of kills.
 		a++;
+		gp.aSetter.objRespawn(0, a>20);
 		
-       if (gp.obj[0] == null&&a>20) {
-    	   
-		gp.obj[0] = new OBJ_health();
-		gp.obj[0].worldX = baseX + (int)(Math.random() * 2 * spawnRange - spawnRange);
-		gp.obj[0].worldY = baseY + (int)(Math.random() * 2 * spawnRange - spawnRange);
-		a = 0;
+		if(a>20) {
+			a = 0;
 		}
-       
-       timer++;
-       
-       if(timer>1800) {
-       gp.obj[0].worldX = baseX + (int)(Math.random() * 2 * spawnRange - spawnRange);
-		gp.obj[0].worldY = baseY + (int)(Math.random() * 2 * spawnRange - spawnRange);
-		timer = 0;
-	}
+
 
 	}
 	

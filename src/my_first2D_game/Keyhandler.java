@@ -6,7 +6,13 @@ import java.awt.event.KeyListener;
 public class Keyhandler implements KeyListener{
 	
 	public boolean upPressed, downPressed, leftPressed, rightPressed, HitPressed;
-//	boolean F3 = false;
+	boolean F3 = false;
+	
+	GamePanel gp;
+	
+	public Keyhandler(GamePanel gp) {
+		this.gp = gp;
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -42,16 +48,32 @@ public class Keyhandler implements KeyListener{
         case KeyEvent.VK_RIGHT :
         	rightPressed = true;
         	break;	
-        case KeyEvent.VK_SPACE  :
+        case KeyEvent.VK_SPACE :
         	HitPressed = true;
-//        case KeyEvent.VK_F3 :
-//        {
-//        	if (F3 == false) {
-//        	F3 = true;
-//        	} else if (F3 == true) {
-//        		F3 = false;
-//        	}
-//        }
+        	break;
+        case KeyEvent.VK_ENTER :
+        	gp.ui.dno++;
+        	break;
+        	
+        case KeyEvent.VK_ESCAPE :
+        { if (gp.GameState == gp.playState) {
+        	gp.GameState = gp.pauseState;
+        } else if (gp.GameState == gp.pauseState){
+        	gp.GameState = gp.playState;
+        }
+        }
+        break;
+        
+        	//DEBUG
+        case KeyEvent.VK_F3 :
+        {
+        	if (F3 == false) {
+        	F3 = true;
+        	} else if (F3 == true) {
+        		F3 = false;
+        	}
+        }
+        break;
         }
 		
 	}
