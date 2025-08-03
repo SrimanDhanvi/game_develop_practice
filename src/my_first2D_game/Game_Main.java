@@ -10,7 +10,7 @@ public class Game_Main {
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(true);
-		window.setTitle("Secret");
+		window.setTitle("The Last Call");
 		
 		// Connecting the GamePenel class.-----
 		GamePanel gamePanel = new GamePanel();

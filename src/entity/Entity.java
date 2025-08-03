@@ -31,14 +31,28 @@ public class Entity {
 	public int objectIndex;
 	public int a = 0;
 	
+	public String imgPath;
+	public int characterNum = 0;
+	public String arrayImgPath[] = new String[10];
 	public BufferedImage[][] getSpritImages;
+	
 	
     
     public Entity(GamePanel gp) {
     	this.gp = gp;
     }
     
+    public void characterNo() {
+    	arrayImgPath[0] = "/player_images/Spritesheet_Player4_Char1.png";
+    	arrayImgPath[1] = "/player_images/Spritesheet_Player01_Char2.png";
+    	
+    	imgPath = arrayImgPath[characterNum];
+    }
+    
     public BufferedImage[][] setUpSpriteSheet(String path, int x, int y) {
+    	
+
+    	
 		try {
 			
 			spriteSheet = ImageIO.read(getClass().getResourceAsStream(path));

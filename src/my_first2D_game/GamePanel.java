@@ -28,14 +28,15 @@ public class GamePanel extends JPanel implements Runnable{
 		public final int tileSize = originalTileSize * scale; // 48x48
 		public final int maxScreenCol = 16;
 		public final int maxScreenRow = 9;
-		public final int screenWidth = maxScreenCol * tileSize; //  pixels
-		public final int screenHeight = maxScreenRow * tileSize; //  px
+		public int screenWidth = maxScreenCol * tileSize; //  768pixels
+		public int screenHeight = maxScreenRow * tileSize; //  432px
 
 		int FPS = 60;
 		public long passed;
 		
 		// GAME STATE
 		public int GameState;
+		public int titleState = 0;
 		public int playState = 1;
 		public int pauseState = 2;
 		
@@ -72,9 +73,9 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		public void setUpGame() {
 			aSetter.setObj();
-			playMusic();
-			playWind();
-			GameState = playState;
+//			playMusic();
+//			playWind();
+			GameState = titleState;
 		}
 		
 		public void startGameThread() {
@@ -137,6 +138,12 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 			//
 			
+			// TITLE SCREEN
+			if(GameState == titleState) {
+				ui.draw(g2);
+			} // OTHERS
+			else {
+			
 			tileM.draw(g2);
 
 			li.draw(g2);
@@ -156,6 +163,8 @@ public class GamePanel extends JPanel implements Runnable{
 		     }
 			
 			ui.draw(g2);
+			
+			}
 			
 			// DEBUG
 			if(keyH.F3 == true) {
@@ -182,14 +191,19 @@ public class GamePanel extends JPanel implements Runnable{
 			music.BGMloop((int)((Math.random()*300) + 60000));
 		}
 		
+		public void stopMusic() {
+			
+			music.stop();
+		}
+		
 		public void playWind() {
 			se.setFile(4);
 			se.loop();
 		}
 		
-		public void stopMusic() {
+        public void stopSE() {
 			
-			music.stop();
+			se.stop();
 		}
 		
 		public void playSE(int i) {

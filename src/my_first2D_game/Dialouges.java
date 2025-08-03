@@ -24,4 +24,6 @@ public class Dialouges {
 	
 	String emo8 = "[Leaving, turns back]";
 	String Dialouge8 = "Don’t trust the cities. And if you hear whispers of the Upper World… pretend you didn’t...";
+	
+	String Health_message = "Health Boost";
 }

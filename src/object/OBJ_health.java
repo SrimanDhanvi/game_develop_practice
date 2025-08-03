@@ -10,7 +10,7 @@ public class OBJ_health extends SuperObject{
 	
 	public OBJ_health() {
 		
-		solidArea = new Rectangle(0,0,70,70);
+		solidArea = new Rectangle(0,0,70,90);
 		
 		name="Health";
 		

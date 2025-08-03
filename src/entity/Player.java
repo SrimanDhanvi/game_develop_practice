@@ -45,8 +45,10 @@ public class Player extends Entity{
 	}
 	
 	public void getplayerImage() {
+	
+		characterNo();
 		
-		getSpritImages = setUpSpriteSheet("/player_images/Spritesheet_Player4.png",4 , 5);
+		getSpritImages = setUpSpriteSheet(imgPath,4 ,5);
 		
 		
 		s1 = getSpritImages[0][0];
@@ -218,7 +220,7 @@ public class Player extends Entity{
 			case 0:
 				gp.playSE(2);
 				gp.obj[0] = null;
-				gp.ui.showMessage("Health Boost", new Color(106, 240, 17, 255), 1);
+				gp.ui.showMessage(1);
 				break;
 			case 1:
 				if(gp.ui.dsno == 0) {
