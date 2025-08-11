@@ -13,12 +13,10 @@ public class ChunkManager extends Patterns{
 	
 	GamePanel gp;
 	HashMap<Point, Chunk> chunkMap = new HashMap<>();
-	ArrayList<Integer> structureCache = new ArrayList<>();
+	HashMap<HashMap <Integer, Point>, Rectangle> discontinuedStructures = new HashMap<>();
 	
 
 	public boolean placingStructures = true;
-	
-	private int chunkX,chunkY;
 	
 	private int startX, startY;
 	
@@ -42,14 +40,15 @@ public class ChunkManager extends Patterns{
 		}
 		
 		if (!chunkMap.containsKey(key)) {
-			Chunk newChunk = generateChunk(chunk, rand);
+			Chunk newChunk = generateChunk(chunk, rand, key);
 			chunkMap.put(key, newChunk);
 		}
 		return chunkMap.get(key);
 	}
 	
 	
-	private void placeStructure(int[][] chunkTiles, int[][] pattern, Random rand, List<Rectangle> previousStructureAreas, List<Rectangle> discontinuedStructures) {
+	private void placeStructure(int[][] chunkTiles, int[][] pattern, Random rand, 
+		List<Rectangle> previousStructureAreas, Point point) {
 		
 		findCoordinatesStructure(rand, pattern, previousStructureAreas);
 		
@@ -63,7 +62,7 @@ public class ChunkManager extends Patterns{
 			}
 		}
 	}
-		saveDiscontinuedStructures(startX, startY, pattern[0].length, pattern.length, pattern, discontinuedStructures);
+		saveOverflow(startX, startY, pattern[0].length, pattern.length, pattern, point);
 		
 		previousStructureAreas.add(new Rectangle(startX, startY, pattern[0].length, pattern.length));
 		}
@@ -112,12 +111,12 @@ public class ChunkManager extends Patterns{
 		
 		placingStructures = false;
 		
-		System.out.println("Trying to place structure at (" + searchX + ", " + searchY + ")");
-		System.out.println("Total previous structures: " + previousStructureAreas.size());
+//		System.out.println("Trying to place structure at (" + searchX + ", " + searchY + ")");
+//		System.out.println("Total previous structures: " + previousStructureAreas.size());
 
 	}
 	
-	public void saveDiscontinuedStructures(int startX, int startY, int width, int height, int[][] pattern, List<Rectangle> discontinuedStructures) {
+	public void saveOverflow (int startX, int startY, int width, int height, int[][] pattern,  Point point) {
 		
 		if (width>(Chunk.size-startX)||height>(Chunk.size-startY)) {
 		int raminingWidth = width - Chunk.size + startX;
@@ -127,23 +126,34 @@ public class ChunkManager extends Patterns{
 		int continueY;
 		int contineWidth;
 		int continueHeight;
+		int condi;
 		
+		// structure is out of boundary at width
 		if (raminingWidth <= 0) {
 			contineX = startX;
 			continueY = 0;
 			contineWidth = width;
 			continueHeight = raminingHeight;
+			condi = 0;
 		}
+		// structure is out of boundary at height
 		else if (raminingHeight <= 0) {
 			contineX = 0;
 			continueY = startY;
 			contineWidth = raminingWidth;
 			continueHeight = height;
+			condi = 1;
 		} else {
 			return;
 		}
 		
-		discontinuedStructures.add(new Rectangle(contineX, continueY, contineWidth, continueHeight));
+//		System.out.println("Structure overflowed");
+		
+		Rectangle rectCache = new Rectangle(contineX, continueY, contineWidth, continueHeight);
+		
+		HashMap <Integer, Point> condStru = new HashMap<>();
+		condStru.put(condi, point);
+		discontinuedStructures.put(condStru, rectCache);
 		}
 	}
 	
@@ -180,61 +190,95 @@ public class ChunkManager extends Patterns{
 	int timer;
 	
 	
-	private Chunk generateChunk(Chunk chunk, Random rand) {
+	private Chunk generateChunk(Chunk chunk, Random rand, Point point) {
 
 		List<Rectangle> previousStructureAreas = new ArrayList<>();
+		List<Rectangle> disStruCache = new ArrayList<>();
 		
 		// add disc struc to LocalStructureAreas
+		if(!discontinuedStructures.isEmpty()) {
+			
+			int condi1st = 0;
+			int condi2nd = 1;
+			
+			for (HashMap<Integer, Point> condStru: discontinuedStructures.keySet()) {
+				if(condStru.containsKey(condi1st)) {
+					Rectangle rectCache = discontinuedStructures.get(condStru);
+					if (rectCache != null) {
+					int x = condStru.get(condi1st).x;
+					int y = condStru.get(condi1st).y;
+					if((++x) == point.x && y == point.y) {
+//						System.out.println("Discontinued structure added");
+					disStruCache.add(rectCache);
+					}
+					}
+				}
+				if(condStru.containsKey(condi2nd)) {
+					Rectangle rectCache = discontinuedStructures.get(condStru);
+					if (rectCache != null) {
+					int x = condStru.get(condi2nd).x;
+					int y = condStru.get(condi2nd).y;
+					if(x == point.x && (++y) == point.y) {
+//						System.out.println("Discontinued structure added");
+					disStruCache.add(rectCache);
+					}
+					}
+				}
+			}
 		
-		List<Rectangle> discontinuedStructures = new ArrayList<>();
+		previousStructureAreas.addAll(disStruCache);
+		}
+		
+		disStruCache.clear();
+		discontinuedStructures.clear();
 		
 		timer--;
 		
 		if (rand.nextInt(100)<50) {
-			placeStructure(chunk.tiles,cageDesign1, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,cageDesign1, rand, previousStructureAreas, point);
 			}
 		if (rand.nextInt(100)<20) {
-			placeStructure(chunk.tiles,pipePattern1, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,pipePattern1, rand, previousStructureAreas, point);
 			}
 		if (rand.nextInt(100)<99) {
-		    placeStructure(chunk.tiles,boxWall, rand, previousStructureAreas, discontinuedStructures);
+		    placeStructure(chunk.tiles,boxWall, rand, previousStructureAreas, point);
 		}
 		if (rand.nextInt(100)<99) {
-			placeStructure(chunk.tiles,boxWall1, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,boxWall1, rand, previousStructureAreas, point);
 			}
 		if (rand.nextInt(100)<99) {
-			placeStructure(chunk.tiles,maze, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,maze, rand, previousStructureAreas, point);
 			}
 		if (rand.nextInt(100)<99) {
-			placeStructure(chunk.tiles,boxWall2, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,boxWall2, rand, previousStructureAreas, point);
 			}
 		if (rand.nextInt(100)<99) {
-			placeStructure(chunk.tiles,boxWall3, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,boxWall3, rand, previousStructureAreas, point);
 			}
 		if (rand.nextInt(100)<99) {
-			placeStructure(chunk.tiles,boxWall4, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,boxWall4, rand, previousStructureAreas, point);
 			}
 		if (rand.nextInt(100)<99) {
-			placeStructure(chunk.tiles,boxWall5, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,boxWall5, rand, previousStructureAreas, point);
 			}
 		if (rand.nextInt(100)<99) {
-			placeStructure(chunk.tiles,doubleRoom, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,doubleRoom, rand, previousStructureAreas, point);
 			}
 		
 
 		if (rand.nextInt(100)<10&&timer<=0) {
-			placeStructure(chunk.tiles,boxWall_light, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,boxWall_light, rand, previousStructureAreas, point);
 			timer = 20;
 		}
 
 		if (rand.nextInt(100)<10&&timer<=0) {
-			placeStructure(chunk.tiles,boxWall_light2, rand, previousStructureAreas, discontinuedStructures);
+			placeStructure(chunk.tiles,boxWall_light2, rand, previousStructureAreas, point);
 			timer = 60;
 		}
-			if (rand.nextInt(100)<10&&timer<=0) {
-				placeStructure(chunk.tiles,boxWall_light3, rand, previousStructureAreas, discontinuedStructures);
-				timer = 120;
-			}
+		if (rand.nextInt(100)<10&&timer<=0) {
+			placeStructure(chunk.tiles,boxWall_light3, rand, previousStructureAreas, point);
+			timer = 120;
+		}
 			
 //			for (int y = 0;y<20;y++) {
 //				for (int x = 0;x<20;x++) {
@@ -247,8 +291,8 @@ public class ChunkManager extends Patterns{
 	}
 	
 	public int getTileID(int worldTileX, int worldTileY) {
-		chunkX = Math.floorDiv(worldTileX, Chunk.size);
-		chunkY = Math.floorDiv(worldTileY, Chunk.size);
+		int chunkX = Math.floorDiv(worldTileX, Chunk.size);
+		int chunkY = Math.floorDiv(worldTileY, Chunk.size);
 		int tileX = Math.floorMod(worldTileX, Chunk.size);
 		int tileY = Math.floorMod(worldTileY, Chunk.size);
 		

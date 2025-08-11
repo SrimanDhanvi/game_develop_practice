@@ -14,7 +14,7 @@ public class SuperObject {
 	public boolean collision = false;
 	public int worldX, worldY;
 	public int objectCounter = 0;
-	public Rectangle solidArea = new Rectangle(0,0,48,48);
+	public Rectangle solidArea;
 	public int solidAreaDefaultX = 0;
 	public int solidAreaDefaultY = 0;
 	public int screenX;
@@ -22,6 +22,7 @@ public class SuperObject {
 	
 	
 	public void draw(Graphics2D g2, GamePanel gp) {
+		
 		
 		screenX = (int)(worldX - gp.player.worldX + gp.player.screenX) ;
 		screenY = (int)(worldY - gp.player.worldY + gp.player.screenY) ;

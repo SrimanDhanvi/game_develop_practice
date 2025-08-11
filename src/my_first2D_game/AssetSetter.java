@@ -1,6 +1,6 @@
 package my_first2D_game;
 
-import entity.NPC_ToroidMob;
+import mobs.Mob_Torroid;
 import object.OBJ_OldMan;
 import object.OBJ_health;
 
@@ -43,7 +43,12 @@ public class AssetSetter {
 	}
 	
 	public void setNPC() {
-		
-		gp.npc[0] = new NPC_ToroidMob(gp);
 	}
+	
+	public void setMob() {
+		gp.monster[0] = new Mob_Torroid(gp);
+   		gp.monster[0].worldX = 25;
+   		gp.monster[0].worldY = 25;
+	}
+
 }

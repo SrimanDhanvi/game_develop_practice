@@ -42,6 +42,10 @@ public class Player extends Entity{
 		worldY = 0*gp.tileSize;
 		speed = 3;
 		direction = "s"; // default
+		
+//		PLAYER STATUS
+		maxLife = 145;
+		life = maxLife;
 	}
 	
 	public void getplayerImage() {
@@ -223,22 +227,13 @@ public class Player extends Entity{
 				gp.ui.showMessage(1);
 				break;
 			case 1:
-				if(gp.ui.dsno == 0) {
-				gp.ui.setDialouge(1);
-				break;
+				if(dsno == 0) {
+					dsno = 1;
+//				System.out.println("rectangle:" + gp.obj[1].solidArea.x);
 				}
+				break;
 			}
 		}
-		
-		// remove the variable and replace it with no. of kills.
-		a++;
-		gp.aSetter.objRespawn(0, a>20);
-		
-		if(a>20) {
-			a = 0;
-		}
-
-
 	}
 	
 	public void draw(Graphics2D g2) {

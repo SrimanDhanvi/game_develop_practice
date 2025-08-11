@@ -15,13 +15,12 @@ public class UI extends Dialouges{
 	GamePanel gp;
 	Graphics g2;
 	Font customFont_1, arial_20;
-	BufferedImage killSymbol_Image, healthSymbol_Image, tenKill_Image, messageImg, Logo_game, TitleBackground, char1, char2;
+	BufferedImage killSymbol_Image, healthSymbol_Image, tenKill_Image, messageImg, Logo_game, TitleBackground, char1, char2, Heath_Bar;
 	public boolean messageOn = false;
 	public String message = "";
 	int messageCounter = 0;
 	String D1, D2;
 	int dno = 0;
-	public int dsno = 0;
 	Color textColor;
 	public int commandNum = 0; 
 	public int selectNum = 0;
@@ -49,6 +48,8 @@ public class UI extends Dialouges{
         		char1 = ImageIO.read(getClass().getResourceAsStream("/player_images/Design2_static.png"));
         		char2 = ImageIO.read(getClass().getResourceAsStream("/player_images/Char2Static.png"));
         		
+        		Heath_Bar = ImageIO.read(getClass().getResourceAsStream("/health_bar/HealthBar.png"));
+        		
 //        		TitleBackground = ImageIO.read(getClass().getResourceAsStream("/logo/Background_image.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -75,13 +76,6 @@ public class UI extends Dialouges{
 	}
 	
 	
-	
-	public void setDialouge(int dsno) {
-		
-		this.dsno = dsno;
-	}
-	
-	
 	public void draw(Graphics g2) {
 		
 		this.g2 = g2;
@@ -95,22 +89,57 @@ public class UI extends Dialouges{
 		   drawTitleScreen();	
 		}
 		
-		// TOP MESSAGES
-		if(messageOn) {
-			messageOnTop();
+		//PLAY STATE
+		if(gp.GameState == gp.playState) {
+			drawPlayerHealth();
+			
+			// TOP MESSAGES
+			if(messageOn) {
+				messageOnTop();
+			}
+			//PERFORMANCE DISPLAY
+			if(gp.keyH.F3) {
+				PerformanceDisplay();
+			}	
+			
+			//DIALOUGE STATE
+			if (gp.player.dsno == 1) {
+				dialougeSet1();
+			}
+			
 		}
-		//PERFORMANCE DISPLAY
-		if(gp.keyH.F3) {
-			PerformanceDisplay();
-		}	
+		
 		//PAUSE STATE
 		if (gp.GameState == gp.pauseState) {
 			drawPauseScreen();
+			
+			//PERFORMANCE DISPLAY
+			if(gp.keyH.F3) {
+				PerformanceDisplay();
+			}	
 		}
-		//DIALOUGE STATE
-		if (dsno == 1) {
-			dialougeSet1();
+
+	}
+	
+	public void drawPlayerHealth() {
+		
+		
+		g2.drawImage(Heath_Bar, 10, 20, 15, 300, null);
+		
+		g2.setColor(new Color(130, 27, 20));
+		
+		int i=0;
+
+		while(i<=gp.player.life) {
+		int y = 315-(i*2);
+		int h = 0+(i*2);
+		g2.fillRect(15, y, 5, h);
+		i++;
 		}
+		// i = 145
+		
+		g2.setColor(new Color(255, 240, 200, 20));
+		g2.fillRect(14, 24, 7, 292);
 	}
 	
 	public void drawTitleScreen() {
@@ -281,7 +310,7 @@ public class UI extends Dialouges{
 		}
 		
 		if (dno == 8) {
-			dsno = 0;
+			gp.player.dsno = 0;
 			dno = 0;
 		}
 		

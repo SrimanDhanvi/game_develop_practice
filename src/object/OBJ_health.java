@@ -10,7 +10,6 @@ public class OBJ_health extends SuperObject{
 	
 	public OBJ_health() {
 		
-		solidArea = new Rectangle(0,0,70,90);
 		
 		name="Health";
 		
@@ -20,6 +19,11 @@ public class OBJ_health extends SuperObject{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		solidArea = new Rectangle(-11,-11,70,70);
+		
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 		collision = true;
 	}
 }

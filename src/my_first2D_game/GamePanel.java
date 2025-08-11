@@ -58,6 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
 		public Player player = new Player (this, keyH);
 		public SuperObject obj[] = new SuperObject[10];
 		public Entity npc[] = new Entity[10];
+		public Entity monster[] = new Entity[10];
 		
 		//LIGHT
 		public light li = new light(this);
@@ -73,6 +74,8 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		public void setUpGame() {
 			aSetter.setObj();
+			aSetter.setNPC();
+			aSetter.setMob();
 //			playMusic();
 //			playWind();
 			GameState = titleState;
@@ -119,7 +122,19 @@ public class GamePanel extends JPanel implements Runnable{
 		public void update() {
 			
 			if (GameState == playState) {
+			//PLAYER
 			player.update();
+			//MONSTER
+			for(int i=0;i < monster.length; i++) {
+				if(monster[i] != null) {
+					monster[i].update();
+				}
+				
+			//OBJECT
+				// remove the true and replace it with no. of kills condition.
+			aSetter.objRespawn(0, true);
+			}
+			
 			}
 			
 		}
@@ -153,6 +168,12 @@ public class GamePanel extends JPanel implements Runnable{
 					obj[i].draw(g2, this);
 				}
 			}
+			
+			for (int i=0;i<monster.length;i++) {
+				if (monster[i] != null && monster[i].worldY < player.worldY) {
+					monster[i].draw(g2);
+				}
+			}
 
 			player.draw(g2);
 				
@@ -161,6 +182,12 @@ public class GamePanel extends JPanel implements Runnable{
 				obj[i].draw(g2, this);
 				 }
 		     }
+			
+			for (int i=0;i<monster.length;i++) {
+				if (monster[i] != null && monster[i].worldY >= player.worldY) {
+					monster[i].draw(g2);
+				}
+			}
 			
 			ui.draw(g2);
 			

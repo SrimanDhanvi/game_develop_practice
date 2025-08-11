@@ -1,5 +1,7 @@
 package entity;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -29,18 +31,97 @@ public class Entity {
 	public boolean collisionOn = false;
 	public int diaSpeed;
 	public int objectIndex;
-	public int a = 0;
+	public int dsno = 0;
 	
 	public String imgPath;
 	public int characterNum = 0;
 	public String arrayImgPath[] = new String[10];
 	public BufferedImage[][] getSpritImages;
 	
+	public int actionLockCounter = 0;
 	
+	public int maxLife;
+	public int life;
     
     public Entity(GamePanel gp) {
     	this.gp = gp;
     }
+    
+    // OBJECT AND NPC
+    public void setAction() {};
+    public void update() {
+    	
+    	setAction();
+    	
+    	collisionOn = false;
+    	gp.cChecker.checkTile(this);
+    	
+		if (collisionOn == false) {
+			
+			switch(direction) {
+			case "up":
+				worldY -= speed;
+				break;
+			case "down":
+				worldY += speed;
+			    break;
+			case"left":
+				worldX -= speed;
+				break;
+			case"right":
+				worldX += speed;
+			   break;
+			}
+		} 
+		spriteCounter++;
+		
+		if (spriteCounter > 50) {
+			if (spriteNum == 1) {
+				spriteNum = 2;
+			} else if (spriteNum == 2) {
+			spriteNum = 1;
+			}
+			spriteCounter = 0;
+		}
+	}
+
+    	public void draw(Graphics2D g2) {
+    		
+    		BufferedImage image = null;
+    		
+    		int screenX = (int)(worldX - gp.player.worldX + gp.player.screenX) ;
+    		int screenY = (int)(worldY - gp.player.worldY + gp.player.screenY) ;
+    		
+    		if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+    			worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+    			worldY + gp.tileSize > gp.player.worldY - gp.player.screenY && 
+    			worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+    			
+    			switch(direction) {
+    			case "s":
+    					image = s1;
+    			break;
+    			case "up":			
+    					image = up1;
+    			break;
+    			case "down":
+    					image = down1;
+    			break;
+    			case "left":
+    					image = left1;
+    			break;
+    			case "right":
+    					image = right1;
+    			break;
+    			}
+    		}
+    			
+    			g2.setColor(new Color(0, 0, 0, 100));
+    			g2.fillOval(screenX+12, screenY+40, 20, 20);
+    			g2.drawImage(image , screenX, screenY, gp.tileSize, gp.tileSize, null);
+    	}
+    	
+    // -------------
     
     public void characterNo() {
     	arrayImgPath[0] = "/player_images/Spritesheet_Player4_Char1.png";
