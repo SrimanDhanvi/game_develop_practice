@@ -1,26 +1,24 @@
 package object;
 
-import java.awt.Rectangle;
-import java.io.IOException;
+import entity.Entity;
+import my_first2D_game.GamePanel;
 
-import javax.imageio.ImageIO;
-
-public class OBJ_health extends SuperObject{
+public class OBJ_health extends Entity{
 
 	
-	public OBJ_health() {
-		
+	public OBJ_health(GamePanel gp) {
+		super(gp);
 		
 		name="Health";
 		
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/Health_object.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		getSpritImages = setUpSpriteSheet("/objects/Health_object.png",1 ,1);
 		
-		solidArea = new Rectangle(-11,-11,70,70);
+		s1 = getSpritImages[0][0];
+		
+		solidArea.x = -11;
+		solidArea.y = -11;
+		solidArea.width = 70;
+		solidArea.height = 70;
 		
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;

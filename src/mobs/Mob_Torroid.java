@@ -30,6 +30,7 @@ public class Mob_Torroid extends Entity{
 		getSpritImages = setUpSpriteSheet("/mob_images/toriod_spriteSheet.png",2 ,1);
 		
 		s1 = getSpritImages[0][0];
+		s2 = getSpritImages[0][1];
 		up1 = getSpritImages[0][1];
 		down1 = getSpritImages[0][1];
 		left1 = getSpritImages[0][1];

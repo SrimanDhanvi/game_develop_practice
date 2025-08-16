@@ -65,15 +65,6 @@ public class Player extends Entity{
 		left2 = getSpritImages[2][0];
 		right1 = getSpritImages[1][1];
 		right2 = getSpritImages[1][2];
-		hitRight = getSpritImages[2][1];
-		hitLeft = getSpritImages[2][2];
-		hitFront = getSpritImages[2][3];
-		hitFront1 = getSpritImages[3][0];
-		hitFront2 = getSpritImages[3][1];
-		hitBack = getSpritImages[3][2];
-		hitBack2 = getSpritImages[4][0];
-		hitRight2 = getSpritImages[4][1];
-		hitLeft2 = getSpritImages[4][2];
 		
 		
 	}
@@ -81,69 +72,29 @@ public class Player extends Entity{
 	public void update() {
 		
 		direction = "s";
-		direction2 = "";
-		direcImg = null;
+		directionDia = "";
 		
 		if (keyH.upPressed == true || keyH.downPressed == true 
-				||keyH.leftPressed == true ||keyH.rightPressed == true|| keyH.HitPressed == true) {
-			
-			if (keyH.HitPressed == true && keyH.upPressed == true && keyH.leftPressed == true) {
-				direction = "up";
-				direction2 = "left";
-				direcImg = "up";
-			}
-			else if (keyH.HitPressed == true && keyH.upPressed == true && keyH.rightPressed == true) {
-				direction = "up";
-				direction2 = "right" ;
-				direcImg = "up";
-			}
-			else if (keyH.HitPressed == true && keyH.downPressed == true && keyH.rightPressed == true) {
-				direction = "down";
-				direction2 = "right" ;
-				direcImg = "down";
-			}
-			else if (keyH.HitPressed == true && keyH.downPressed == true && keyH.leftPressed == true) {
-				direction = "down";
-				direction2 = "left" ;
-				direcImg = "down";
-			}
-			else if (keyH.HitPressed == true && keyH.upPressed == true) {
-				direction = "up";
-				direcImg = "up";
-			}
-			else if (keyH.HitPressed == true && keyH.downPressed == true) {
-				direction = "down";
-				direcImg = "down";
-			}
-			else if (keyH.HitPressed == true && keyH.leftPressed == true) {
-				direction = "left";
-				direcImg = "left";
-		    }
-			else if (keyH.HitPressed == true && keyH.rightPressed == true) {
-				direction = "right";
-				direcImg = "right";
-		    } else if (keyH.HitPressed == true) {
-		    	direcImg = "s";
-			}		
+				||keyH.leftPressed == true ||keyH.rightPressed == true) {
 		
 		
-		else if (keyH.upPressed == true && keyH.leftPressed == true) {
+		if (keyH.upPressed == true && keyH.leftPressed == true) {
 			direction = "up";
-			direction2 = "left" ;
+			directionDia = "left" ;
 		}
 		else if (keyH.upPressed == true && keyH.rightPressed == true) {
 			direction = "up";
-			direction2 = "right" ;
+			directionDia = "right" ;
 		}
 		else if (keyH.downPressed == true && keyH.rightPressed == true) {
 			direction = "down";
-			direction2 = "right" ;
+			directionDia = "right" ;
 		}
 		else if (keyH.downPressed == true && keyH.leftPressed == true) {
 			direction = "down";
-			direction2 = "left" ;
+			directionDia = "left" ;
 		}
-		else if (keyH.upPressed == true && keyH.leftPressed == false) {
+		else if (keyH.upPressed == true) {
 			direction = "up";
 		}
 		else if (keyH.downPressed == true) {
@@ -166,6 +117,14 @@ public class Player extends Entity{
 		objectIndex = gp.cChecker.checkObject(this, true);
 		pickUpObject(objectIndex);
 		
+		//Check NPC collision
+		npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+		interactNPC(npcIndex);
+		
+		//Check monster collision
+		mobIndex = gp.cChecker.checkEntity(this, gp.monster);
+		
+		
 		if (collisionOn == false) {
 			
 			switch(direction) {
@@ -184,7 +143,7 @@ public class Player extends Entity{
 			}
 			
 			
-			switch(direction2) {
+			switch(directionDia) {
 			case "up":
 				worldY -= diaSpeed;
 				break;
@@ -226,13 +185,21 @@ public class Player extends Entity{
 				gp.obj[0] = null;
 				gp.ui.showMessage(1);
 				break;
-			case 1:
-				if(dsno == 0) {
-					dsno = 1;
-//				System.out.println("rectangle:" + gp.obj[1].solidArea.x);
-				}
-				break;
 			}
+		}
+	}
+	
+	public void interactNPC(int i) {
+		
+		if(i != 999) {
+			switch(i) {
+		    case 0:
+			    if(dsno == 0) {
+				dsno = 1;
+//			    System.out.println("rectangle:" + gp.obj[1].solidArea.x);
+			    }
+			    break;
+		    }
 		}
 	}
 	
@@ -257,7 +224,6 @@ public class Player extends Entity{
 		
 		BufferedImage image = null;
 		
-		if (direcImg == null) {
 		switch(direction) {
 		case "s":
 			if (spriteNum == 1) {
@@ -299,45 +265,6 @@ public class Player extends Entity{
 				image = right2;
 			}
 		break;
-		}
-		} else {
-		switch (direcImg) {
-		case "s":
-			image = hitFront;
-		break;
-		case "up":			
-			if (spriteNum == 1) {
-				image = hitBack;
-			}
-			if (spriteNum == 2) {
-				image = hitBack2;
-			}
-		break;
-		case "down":
-			if (spriteNum == 1) {
-				image = hitFront1;
-			}
-			if (spriteNum == 2) {
-				image = hitFront2;
-			}
-		break;
-		case "left":
-			if (spriteNum == 1) {
-				image = hitLeft;
-			}
-			if (spriteNum == 2) {
-				image = hitLeft2;
-			}
-		break;
-		case "right":
-			if (spriteNum == 1) {
-				image = hitRight;
-			}
-			if (spriteNum == 2) {
-				image = hitRight2;
-			}
-		break;
-		}
 		}
 		
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);

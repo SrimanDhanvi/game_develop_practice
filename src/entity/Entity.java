@@ -12,49 +12,67 @@ import my_first2D_game.GamePanel;
 
 public class Entity {
 	
+	// MAIN
 	GamePanel gp;
 	public int worldX, worldY ;
 	public int speed;
+	public int diaSpeed;
 	
-	public BufferedImage s1, s2, up1, up2, down1, down2, left1, left2, right1, right2,
-	  hitRight, hitLeft, hitFront, hitFront1, hitFront2, hitBack, hitBack2, hitRight2, hitLeft2;
-	public BufferedImage spriteSheet;
-	public String direction;
-	public String direction2;
-	public String direcImg;
+	public String name;
+	
+	public BufferedImage s1, s2, up1, up2, down1, down2, left1, left2, right1, right2;
+	public BufferedImage[][] getSpritImages;
+//	public BufferedImage image;
+	
+	public String direction = "s";
+	public String directionDia;
 	
 	public int spriteCounter = 0;
+	public int spriteCounter2 = 0;
 	public int spriteNum = 1;
+	public int spriteNum2 = 1;
+	
+	// COLLISION RELATED
+	public boolean collision = false;
+	public boolean collisionOn = false;
     
 	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
 	public int solidAreaDefaultX, solidAreaDefaultY;
-	public boolean collisionOn = false;
-	public int diaSpeed;
-	public int objectIndex;
+
+
+	// MINOR VARIABLES
+	int objectIndex;
+	int npcIndex;
+	int mobIndex;
 	public int dsno = 0;
-	
-	public String imgPath;
 	public int characterNum = 0;
+	public String imgPath;
 	public String arrayImgPath[] = new String[10];
-	public BufferedImage[][] getSpritImages;
-	
+	public BufferedImage spriteSheet;
 	public int actionLockCounter = 0;
+//	public int objectCounter = 0;
 	
+	// LIFE
 	public int maxLife;
 	public int life;
+	
+	
     
     public Entity(GamePanel gp) {
     	this.gp = gp;
     }
     
-    // OBJECT AND NPC
+    
+    // OBJECT, NPC AND MOBS
     public void setAction() {};
     public void update() {
     	
     	setAction();
     	
     	collisionOn = false;
-    	gp.cChecker.checkTile(this);
+    	gp.cChecker.checkTile(this);	
+    	gp.cChecker.checkObject(this,false);
+    	gp.cChecker.checkPlayer(this);
     	
 		if (collisionOn == false) {
 			
@@ -73,15 +91,15 @@ public class Entity {
 			   break;
 			}
 		} 
-		spriteCounter++;
+		spriteCounter2++;
 		
-		if (spriteCounter > 50) {
-			if (spriteNum == 1) {
-				spriteNum = 2;
-			} else if (spriteNum == 2) {
-			spriteNum = 1;
+		if (spriteCounter2 > 12) {
+			if (spriteNum2 == 1) {
+				spriteNum2 = 2;
+			} else if (spriteNum2 == 2) {
+			spriteNum2 = 1;
 			}
-			spriteCounter = 0;
+			spriteCounter2 = 0;
 		}
 	}
 
@@ -99,19 +117,64 @@ public class Entity {
     			
     			switch(direction) {
     			case "s":
+    			    if(s2 == null) {
     					image = s1;
+    			    } else {
+    				    if (spriteNum2 == 1) {
+    					    image = s1;
+    				     }
+    				    if (spriteNum2 == 2) {
+    					    image = s2;
+    				}
+    			}
     			break;
-    			case "up":			
+    			case "up":	
+    				if(up2 == null) {
     					image = up1;
+    				} else {
+    					if (spriteNum2 == 1) {
+    						image = up1;
+    					}
+    					if (spriteNum2 == 2) {
+    						image = up2;
+    					}
+    				}
     			break;
     			case "down":
+    				if(down2 == null) {
     					image = down1;
+    				} else {
+    					if (spriteNum2 == 1) {
+    						image = down1;
+    					}
+    					if (spriteNum2 == 2) {
+    						image = down2;
+    					}
+    				}
     			break;
     			case "left":
+    				if(left2 == null) {
     					image = left1;
+    				} else {
+    					if (spriteNum2 == 1) {
+    						image = left1;
+    					}
+    					if (spriteNum2 == 2) {
+    						image = left2;
+    					}
+    				}
     			break;
     			case "right":
+    				if(right2 == null) {
     					image = right1;
+    				} else {
+    					if (spriteNum2 == 1) {
+    						image = right1;
+    					}
+    					if (spriteNum2 == 2) {
+    						image = right2;
+    					}
+    				}
     			break;
     			}
     		}
@@ -121,19 +184,18 @@ public class Entity {
     			g2.drawImage(image , screenX, screenY, gp.tileSize, gp.tileSize, null);
     	}
     	
-    // -------------
+    // -----------------------------------------------------------------------------------
+    	
+    	
     
     public void characterNo() {
-    	arrayImgPath[0] = "/player_images/Spritesheet_Player4_Char1.png";
-    	arrayImgPath[1] = "/player_images/Spritesheet_Player01_Char2.png";
+     	arrayImgPath[0] = "/player_images/Spritesheet_Player4_Char1.png";
+     	arrayImgPath[1] = "/player_images/Spritesheet_Player01_Char2.png";
     	
-    	imgPath = arrayImgPath[characterNum];
+     	imgPath = arrayImgPath[characterNum];
     }
     
     public BufferedImage[][] setUpSpriteSheet(String path, int x, int y) {
-    	
-
-    	
 		try {
 			
 			spriteSheet = ImageIO.read(getClass().getResourceAsStream(path));

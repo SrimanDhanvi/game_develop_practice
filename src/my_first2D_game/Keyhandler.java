@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class Keyhandler implements KeyListener{
 	
-	public boolean upPressed, downPressed, leftPressed, rightPressed, HitPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed;
 	boolean F3 = false;
 	
 	GamePanel gp;
@@ -171,58 +171,58 @@ public class Keyhandler implements KeyListener{
 	}
 		
 		//PLAY STATE
-        switch(code) {
-        case KeyEvent.VK_W : 
-        	upPressed = true;
-        	break;
-        case KeyEvent.VK_S :
-        	downPressed = true;
-        	break;
-        case KeyEvent.VK_A :
-        	leftPressed = true;
-        	break;
-        case KeyEvent.VK_D :
-        	rightPressed = true;
-        	break;
-        case KeyEvent.VK_UP : 
-        	upPressed = true;
-        	break;
-        case KeyEvent.VK_DOWN :
-        	downPressed = true;
-        	break;
-        case KeyEvent.VK_LEFT :
-        	leftPressed = true;
-        	break;
-        case KeyEvent.VK_RIGHT :
-        	rightPressed = true;
-        	break;	
-        case KeyEvent.VK_SPACE :
-        	HitPressed = true;
-        	break;
-        case KeyEvent.VK_ENTER :
-        	gp.ui.dno++;
-        	break;
-        	
-        case KeyEvent.VK_ESCAPE :
-        { if (gp.GameState == gp.playState) {
-        	gp.GameState = gp.pauseState;
-        } else if (gp.GameState == gp.pauseState){
-        	gp.GameState = gp.playState;
-        }
-        }
-        break;
-        
-        	//DEBUG
-        case KeyEvent.VK_F3 :
-        {
-        	if (F3 == false) {
-        	F3 = true;
-        	} else if (F3 == true) {
-        		F3 = false;
-        	}
-        }
-        break;
-        }
+		if(gp.GameState == gp.playState) {
+	        switch(code) {
+	        case KeyEvent.VK_W : 
+	         	upPressed = true;
+	        	break;
+	        case KeyEvent.VK_S :
+	         	downPressed = true;
+	        	break;
+	        case KeyEvent.VK_A :
+	         	leftPressed = true;
+	        	break;
+	        case KeyEvent.VK_D :
+	         	rightPressed = true;
+	        	break;
+	        case KeyEvent.VK_UP : 
+	         	upPressed = true;
+	        	break;
+	        case KeyEvent.VK_DOWN :
+	         	downPressed = true;
+	        	break;
+	        case KeyEvent.VK_LEFT :
+	         	leftPressed = true;
+	        	break;
+	        case KeyEvent.VK_RIGHT :
+	         	rightPressed = true;
+	        	break;	
+	        case KeyEvent.VK_ENTER :
+	         	gp.ui.dno++;
+	        	break;
+	        	
+	        case KeyEvent.VK_ESCAPE :
+	        { if (gp.GameState == gp.playState) {
+	         	gp.GameState = gp.pauseState;
+	        } else if (gp.GameState == gp.pauseState){
+	         	gp.GameState = gp.playState;
+	        }
+	        }
+	        break;
+	        
+	        	//DEBUG
+	        case KeyEvent.VK_F3 :
+	        {
+	        	if (F3 == false) {
+	        	F3 = true;
+	        	} else if (F3 == true) {
+	        		F3 = false;
+	        	}
+	        }
+	        break;
+	        }
+		}
+
 		
 	}
 
@@ -256,9 +256,6 @@ public class Keyhandler implements KeyListener{
         case KeyEvent.VK_RIGHT :
         	rightPressed = false;
         	break;	
-        case KeyEvent.VK_SPACE  :
-        	HitPressed = false;
-        break;
         }
 		
 	}
