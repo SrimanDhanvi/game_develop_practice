@@ -123,6 +123,7 @@ public class Player extends Entity{
 		
 		//Check monster collision
 		mobIndex = gp.cChecker.checkEntity(this, gp.monster);
+		contactMonster(mobIndex);
 		
 		
 		if (collisionOn == false) {
@@ -198,6 +199,17 @@ public class Player extends Entity{
 				dsno = 1;
 //			    System.out.println("rectangle:" + gp.obj[1].solidArea.x);
 			    }
+			    break;
+		    }
+		}
+	}
+	
+	public void contactMonster(int i) {
+		
+		if(i != 999) {
+			switch(i) {
+		    case 0:
+		    	life -= 1;
 			    break;
 		    }
 		}

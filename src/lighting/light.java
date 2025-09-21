@@ -23,7 +23,7 @@ public class light extends Quant{
 		darkness = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D gDark = darkness.createGraphics();
 		
-		gDark.setColor(new Color(0, 0, 0, 100));
+		gDark.setColor(new Color(0, 0, 0, 80));
 		gDark.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		
 		

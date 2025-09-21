@@ -138,6 +138,8 @@ public class GamePanel extends JPanel implements Runnable{
 			aSetter.objRespawn(0, true);
 			}
 			
+			ui.update();
+			
 			}
 			
 		}

@@ -75,6 +75,9 @@ public class UI extends Dialouges{
 		}
 	}
 	
+	public void update() {
+		drawPlayerHealth();
+	}
 	
 	public void draw(Graphics g2) {
 		
@@ -128,15 +131,18 @@ public class UI extends Dialouges{
 		
 		g2.setColor(new Color(130, 27, 20));
 		
-		int i=0;
+		int barX = 15;
+		int barY = 25;
+		int barWidth = 5;
+		int barHeight = 290;
+		
+	    // calculate health ratio
+	    float healthPercent = (float) gp.player.life / gp.player.maxLife;
 
-		while(i<=gp.player.life) {
-		int y = 315-(i*2);
-		int h = 0+(i*2);
-		g2.fillRect(15, y, 5, h);
-		i++;
-		}
-		// i = 145
+	    // height of the filled portion
+	    int filledHeight = (int) (barHeight * healthPercent);
+	    
+		g2.fillRect(barX, barY + (barHeight - filledHeight), barWidth, filledHeight);	
 		
 		g2.setColor(new Color(255, 240, 200, 20));
 		g2.fillRect(14, 24, 7, 292);
@@ -249,8 +255,8 @@ public class UI extends Dialouges{
 	public void PerformanceDisplay() {
 		g2.setFont(g2.getFont().deriveFont(10f));
 		g2.setColor(Color.white);
-		g2.drawString("X, Y: " + gp.player.worldX + ", " + gp.player.worldY, 10, 100);
-		g2.drawString("Draw Time: " + gp.passed, 10, 110);
+		g2.drawString("X, Y: " + gp.player.worldX + ", " + gp.player.worldY, 10, 330);
+		g2.drawString("Draw Time: " + gp.passed, 10, 340);
 	}
 	
 	public void dialougeBox() {

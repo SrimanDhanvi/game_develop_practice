@@ -17,7 +17,9 @@ public class AssetSetter {
 	
 	public void setObj() {
 		
-		gp.obj[0] = null;
+   		gp.obj[0] = new OBJ_health(gp);
+   		gp.obj[0].worldX = gp.player.worldX + (int)(Math.random() * 2 * spawnRange - spawnRange);
+   		gp.obj[0].worldY = gp.player.worldY + (int)(Math.random() * 2 * spawnRange - spawnRange);
 		
 	}
 	
@@ -42,7 +44,7 @@ public class AssetSetter {
 		
 		gp.npc[0] = new NPC_OldMan(gp);
 		gp.npc[0].worldX = 0;
-		gp.npc[0].worldY = 110;
+		gp.npc[0].worldY = 100;
 	}
 	
 	public void setMob() {

@@ -9,9 +9,9 @@ public class OBJ_health extends Entity{
 	public OBJ_health(GamePanel gp) {
 		super(gp);
 		
-		name="Health";
-		
 		getSpritImages = setUpSpriteSheet("/objects/Health_object.png",1 ,1);
+		
+		direction = "s";
 		
 		s1 = getSpritImages[0][0];
 		
